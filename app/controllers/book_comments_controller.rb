@@ -7,7 +7,7 @@ class BookCommentsController < ApplicationController
         redirect_to book_path(@book)
         else
             @book_comment = comment
-            @bookf = @book
+            @bookf = Book.new
             render 'books/show'
         end
     end
@@ -22,4 +22,8 @@ class BookCommentsController < ApplicationController
     def book_comment_params
         params.require(:book_comment).permit(:comment)
     end
+    
+    def book_params
+    params.require(:book).permit(:title,:body)
+  end
 end
