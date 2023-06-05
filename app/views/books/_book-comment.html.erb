@@ -1,0 +1,19 @@
+<!--コメント一覧の部分テンプレ-->
+<div id="comment-list">
+  <% book.book_comments.each do |book_comment| %>
+  <table class='table'>
+    <tr>
+      <td><%= link_to book_comment.user do %>
+        <%= image_tag book_comment.user.get_profile_image, size:"60x60" %><br>
+        <%= book_comment.user.name %>
+        <% end %>
+      </td>
+      <td><%= book_comment.comment %></td>
+      <td><% if book_comment.user == current_user %>
+        <%= link_to "Destroy", [book_comment.book, book_comment], method: :delete, class:"btn btn-sm btn-danger", remote: true  %>
+      <% end %>
+      </td>
+      <% end %>
+    </tr>
+  </table>
+</div>
