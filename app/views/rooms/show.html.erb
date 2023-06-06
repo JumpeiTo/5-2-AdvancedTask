@@ -17,13 +17,13 @@
       <div class="col-12">
         <% @messages.each do |m| %>
           <% if @myUserId == m.user.id %>
-          <div class="message mb-1 border">
-            <div class="message-user"><%= m.user.name %></div>
+          <div class="message mb-1 border pl-1">
+            <div class="message-user font-weight-bold text-warning"><%= m.user.name %></div>
             <div class="message-content"><%= m.message %></div>
           </div>
           <% else %>
-          <div class="message border">
-            <div class="message-user"><%= m.user.name %></div>
+          <div class="other-message mb-1 border pl-1">
+            <div class="message-user font-weight-bold text-secondary"><%= m.user.name %></div>
             <div class="message-content"><%= m.message %></div>
           </div>
           <% end %>
