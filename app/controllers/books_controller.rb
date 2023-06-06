@@ -22,7 +22,7 @@ class BooksController < ApplicationController
                          .where(created_at: from...to)
                          .size
             }
-    @books = Kaminari.paginate_array(books).page(params[:page]) # ページネーション
+    @books = Kaminari.paginate_array(books).page(params[:page]).per(8) # ページネーション
     @book = Book.new
   end
 

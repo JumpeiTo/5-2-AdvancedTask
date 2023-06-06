@@ -3,8 +3,14 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @books = @user.books
+    @books = Kaminari.paginate_array(@user.books).page(params[:page]).per(5) # ページネーション
     @book = Book.new
+    @books2 = @user.books
+    # 投稿数の記述
+    @today_book =  @books2.created_today
+    @yesterday_book = @books2.created_yesterday
+    @this_week_book = @books2.created_this_week
+    @last_week_book = @books2.created_last_week
     # DMの記述
     @currentUserEntry=Entry.where(user_id: current_user.id)
     @userEntry=Entry.where(user_id: @user.id)
