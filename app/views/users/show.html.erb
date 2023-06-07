@@ -13,7 +13,7 @@
 
       
       <!--投稿数の表示-->
-      <h2>投稿数の前日比・前週比</h2>
+      <h3>投稿数の前日比・前週比</h3>
       <div class="table_width">
         <table class="table table-bordered">
           <thead>
@@ -59,5 +59,59 @@
           </tbody>
         </table>
       </div>  
+      
+      <!--七日間の投稿数-->
+      <h3>7日分の投稿数</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>６日前</th>
+            <th>5日前</th>
+            <th>4日前</th>
+            <th>3日前</th>
+            <th>２日前</th>
+            <th>昨日</th>
+            <th>今日</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @books2.created_6days.count %></td>
+            <td><%= @books2.created_5days.count %></td>
+            <td><%= @books2.created_4days.count %></td>
+            <td><%= @books2.created_3days.count %></td>
+            <td><%= @books2.created_2days.count %></td>
+            <td><%= @yesterday_book.count %></td>
+            <td><%= @today_book.count %></td>
+          </tr>
+        </tbody>
+      </table>
+      
+    <!--グラフ-->
+    <p class="graph-title text-center mb-0 font-weight-bold">7日間の投稿数の比較</p>
+    <canvas id="myChart" width="100%" height="40px">
+      <script data-turbolinks-eval="false">
+        document.addEventListener("turbolinks:load", function() {
+          var ctx = document.getElementById("myChart").getContext('2d');
+          var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '昨日', '今日'],
+              datasets: [{
+                label: "投稿した本の数",
+                data: [<%= @books2.created_6days.count %>, <%= @books2.created_5days.count %>, <%= @books2.created_4days.count %>, <%= @books2.created_3days.count %>, <%= @books2.created_2days.count %>, <%= @yesterday_book.count %>, <%= @today_book.count %>],
+                backgroundColor: 'rgba(255, 80, 120, 1.0)',
+                borderColor: 'rgba(255, 80, 120, 1.0)',
+                lineTension: 0.4,
+                fill: false
+              }]
+            },
+            options: {
+              responsive: true
+            }
+          });
+        });
+      </script>
+    </canvas>
   </div>
 </div>
