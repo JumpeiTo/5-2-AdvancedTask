@@ -19,6 +19,9 @@ class User < ApplicationRecord
   has_many :entries, dependent: :destroy
   # 閲覧数
   has_many :view_counts, dependent: :destroy
+  # グループ
+  has_many :group_users
+  has_many :groups, through: :group_users
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
