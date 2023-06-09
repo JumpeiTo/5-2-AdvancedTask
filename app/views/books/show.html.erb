@@ -23,24 +23,7 @@
           <td>コメント数：<%= @book.book_comments.count %></td>
           <td>閲覧数: <%= @book.view_counts.count %></td>
           <td>
-            <div id="star-rating" data-score="<%= @book.star %>"></div>
-            <script>
-              $(document).on('turbolinks:load', function() {
-                let elem = document.querySelector('#star-rating');
-                if (elem == null) return;
-                  if (elem == null) return;
-                  elem.innerHTML = ""
-                let score = elem.dataset.score;
-                let opt = {
-                  readOnly: true,
-                  starOn: "<%= asset_path('star-on.png') %>",
-                  starOff: "<%= asset_path('star-off.png') %>",
-                  starHalf: "<%= asset_path('star-half.png') %>",
-                  score: score
-                };
-                raty(elem, opt);
-              });
-            </script>
+            <%= render "static_rate", book: @book %>
           </td>
           <% if @book.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>

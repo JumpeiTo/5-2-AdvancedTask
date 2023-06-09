@@ -9,25 +9,31 @@
   </div>
   
   <!-- starについての記述 -->
-  <div class="form-group" id="star">
-    <div class="rate-label" style="display: inline-block;">Rate</div>
-    <%= f.hidden_field :star, id: :review_star, class: 'form-control' %>
-    <div id="post_raty" style="display: inline-block;"></div>
-  </div>
-  <script>
-    $(document).on('turbolinks:load', function() {
-      let elem = document.querySelector('#post_raty');
-      if (elem == null) return;
-      elem.innerHTML = "";
-      let opt = {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
-        scoreName: 'book[star]'
-      };
-      raty(elem, opt);
-    });
-  </script>
+  <% if book.id.nil? %>
+    <div class="form-group" id="star">
+      <div class="rate-label" style="display: inline-block;">Rate</div>
+      <%= f.hidden_field :star, id: :review_star, class: 'form-control' %>
+      <div id="post_raty" style="display: inline-block;"></div>
+    </div>
+    <script>
+      $(document).on('turbolinks:load', function() {
+        let elem = document.querySelector('#post_raty');
+        if (elem == null) return;
+        elem.innerHTML = "";
+        let opt = {
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          scoreName: 'book[star]'
+        };
+        raty(elem, opt);
+      });
+    </script>
+  <% else %>
+    <div class="form-group">
+      <%= render "static_rate", book: book %>
+    </div>
+  <% end %>
 
   
   <div class="form-group">
