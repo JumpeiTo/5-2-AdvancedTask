@@ -2,7 +2,7 @@
   <div class='row'>
     <div class='col-md-3'>
       <h2>User info</h2>
-      <%= render 'users/info', user: @book.user %>
+      <%= render 'users/info', user: @book.user,room: Room.new ,entry: Entry.new ,isRoom: @isRoom ,roomId: @roomId %>
       <h2 class="mt-3">New book</h2>
       <%= render 'books/form', book: Book.new %>
     </div>
@@ -17,15 +17,35 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
-          <% if @book.user == current_user %>
-            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
-            <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
-          <% end %>
           <td class="favorite-btn">
             <%= render "favorites/favorite-btn", book: @book %>
           </td>
           <td>コメント数：<%= @book.book_comments.count %></td>
           <td>閲覧数: <%= @book.view_counts.count %></td>
+          <td>
+            <div id="star-rating" data-score="<%= @book.star %>"></div>
+            <script>
+              $(document).on('turbolinks:load', function() {
+                let elem = document.querySelector('#star-rating');
+                if (elem == null) return;
+                  if (elem == null) return;
+                  elem.innerHTML = ""
+                let score = elem.dataset.score;
+                let opt = {
+                  readOnly: true,
+                  starOn: "<%= asset_path('star-on.png') %>",
+                  starOff: "<%= asset_path('star-off.png') %>",
+                  starHalf: "<%= asset_path('star-half.png') %>",
+                  score: score
+                };
+                raty(elem, opt);
+              });
+            </script>
+          </td>
+          <% if @book.user == current_user %>
+            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
+            <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
+          <% end %>
         </tr>
       </table>
       

@@ -6,7 +6,7 @@
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +24,25 @@
         </td>
         <td><%= "コメント数: #{book.book_comments.count}" %></td>
         <td>閲覧数: <%= book.view_counts.count %></td>
+        <td>
+          <div id="star-rating-<%= book.id %>" data-score="<%= book.star %>"></div>
+            <script>
+              $(document).on('turbolinks:load', function() {
+                let elem = document.querySelector('#star-rating-<%= book.id %>');
+                if (elem == null) return;
+                elem.innerHTML = "";
+                let score = elem.dataset.score;
+                let opt = {
+                  readOnly: true,
+                  starOn: "<%= asset_path('star-on.png') %>",
+                  starOff: "<%= asset_path('star-off.png') %>",
+                  starHalf: "<%= asset_path('star-half.png') %>",
+                  score: score
+                };
+                raty(elem, opt);
+              });
+            </script>
+        </td>
       </tr>
     <% end %>
   </tbody>
