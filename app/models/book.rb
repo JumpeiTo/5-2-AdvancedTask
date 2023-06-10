@@ -19,12 +19,17 @@ class Book < ApplicationRecord
   scope :created_5days, -> { where(created_at: 5.days.ago.all_day) } 
   scope :created_6days, -> { where(created_at: 6.days.ago.all_day) } 
   
+  # paramsの取り出し方
+  scope :latest, -> {order(created_at: :desc)}
+  scope :old, -> {order(created_at: :asc)}
+  scope :star_count, -> {order(star: :desc)}
+  
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
 
 
-# 検索方法分岐
+  # 検索方法分岐
   def self.looks(search, word)
     if search == "perfect_match"
       @book = Book.where("title LIKE?","#{word}")

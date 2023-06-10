@@ -1,1 +1,13 @@
-$("#search_result").html("<%= j(render 'search', search_book: @search_book) %>");
+$('.daily_posts_table').html(`
+  <% if @search_book.present? %>
+    <h3>検索結果</h3>
+    <div class="card">
+      <div class="card-header">投稿数</div>
+      <div class="card-body">
+        <%= j(@search_book.count) %>
+      </div>
+    </div>
+  <% else %>
+    <p>該当する投稿はありません</p>
+  <% end %>
+`);
