@@ -7,6 +7,7 @@ class Book < ApplicationRecord
   
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
+  validates :tag,presence:true
   
   # 本の投稿数
   scope :created_today, -> { where(created_at: Time.zone.now.all_day) } 

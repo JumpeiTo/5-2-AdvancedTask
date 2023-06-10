@@ -94,7 +94,7 @@
     <p class="graph-title text-center mb-0 font-weight-bold">7日間の投稿数の比較</p>
     <canvas id="myChart" width="100%" height="40px">
       <script data-turbolinks-eval="false">
-        document.addEventListener("turbolinks:load", function() {
+        $(document).on("turbolinks:load", function() {
           var ctx = document.getElementById("myChart").getContext('2d');
           var myChart = new Chart(ctx, {
             type: 'line',
@@ -110,7 +110,16 @@
               }]
             },
             options: {
-              responsive: true
+              responsive: true,
+              scales: {
+                y:{
+                  suggestedMin: 0,
+                  suggestedMax: 10
+                },
+                x:{
+                  stacked: true
+                },
+              },
             }
           });
         });

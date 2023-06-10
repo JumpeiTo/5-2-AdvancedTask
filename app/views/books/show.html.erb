@@ -9,27 +9,45 @@
     <div class='col-md-8 offset-md-1'>
   		<h2>Book detail</h2>
   		<table class='table'>
-  		  <tr>
-          <td><%= link_to(@book.user) do %>
-            <%= image_tag @book.user.get_profile_image, size:"100x100" %><br>
-            <%= @book.user.name %>
+  		  <thead>
+          <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Opinion</th>
+            <th>Tag</th>
+            <th colspan="4"></th>
+          </tr>
+        </thead>
+        <tbody>
+    		  <tr>
+            <td><%= link_to(@book.user) do %>
+              <%= image_tag @book.user.get_profile_image, size:"100x100" %><br>
+              <%= @book.user.name %>
+              <% end %>
+            </td>
+            <td><%= link_to @book.title, @book %></td>
+            <td><%= @book.body %></td>
+            <td>
+              <% if @book.tag.present? %>
+                <%= link_to @book.tag, tag_search_path(word: @book.tag) %>
+              <% else %>
+                <%= @book.tag %>
+              <% end %>
+            </td>
+            <td class="favorite-btn">
+              <%= render "favorites/favorite-btn", book: @book %>
+            </td>
+            <td>コメント数：<%= @book.book_comments.count %></td>
+            <td>閲覧数: <%= @book.view_counts.count %></td>
+            <td>
+              <%= render "static_rate", book: @book %>
+            </td>
+            <% if @book.user == current_user %>
+              <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
+              <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
             <% end %>
-          </td>
-          <td><%= link_to @book.title, @book %></td>
-          <td><%= @book.body %></td>
-          <td class="favorite-btn">
-            <%= render "favorites/favorite-btn", book: @book %>
-          </td>
-          <td>コメント数：<%= @book.book_comments.count %></td>
-          <td>閲覧数: <%= @book.view_counts.count %></td>
-          <td>
-            <%= render "static_rate", book: @book %>
-          </td>
-          <% if @book.user == current_user %>
-            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
-            <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
-          <% end %>
-        </tr>
+          </tr>
+        </tbody>
       </table>
       
       <!--コメント一覧-->
